@@ -15,14 +15,12 @@ interface Webservice {
     /**
      * Gets all rates
      */
-    @Headers("Accept: application/json")
     @GET("/rates")
     fun getRates() : Call<List<Rate>>
 
     /**
      * Gets all transactions
      */
-    @Headers("Accept: application/json")
     @GET("/transactions")
     fun getTransactions() : Call<List<Transaction>>
 }
