@@ -38,7 +38,7 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
 
         var trades =  Transformations.map(commonRepository.getTransactions(productId)) { transactions ->
             transactions.map { transaction ->
-                if (transaction?.currency == EURO) {
+                if (transaction.currency == EURO) {
                     transaction.amount?.let { createTradeObject(transaction.amount) }
                 } else {
                     getEuroValue(transaction)?.let { euroAmount ->
@@ -49,9 +49,9 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
         }
 
         var mediatorLiveData = MediatorLiveData<ProductTrades>()
-        mediatorLiveData.addSource(trades) { trades ->
-            var totalAmount = trades.sumByFloat { it.amount }
-            mediatorLiveData.value = ProductTrades(totalAmount = String.format("%.2f %s", totalAmount, EURO), trades = trades)
+        mediatorLiveData.addSource(trades) { processedTrades ->
+            var totalAmount = processedTrades.sumByFloat { it.amount }
+            mediatorLiveData.value = ProductTrades(totalAmount = String.format("%.2f %s", totalAmount, EURO), trades = processedTrades)
         }
 
         return mediatorLiveData

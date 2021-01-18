@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp">
-    <TextView
-        android:id="@+id/tvProductId"
+    android:layout_marginStart="@dimen/medium_view_space"
+    android:layout_marginEnd="@dimen/medium_view_space"
+    android:layout_marginTop="@dimen/small_view_space"
+    android:layout_marginBottom="@dimen/small_view_space"
+    style="@style/Widget.MaterialComponents.CardView">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="XFG4534"
-        android:textSize="16sp"
-        />
-</LinearLayout>
+        android:padding="@dimen/medium_view_space">
+        <TextView
+            android:id="@+id/tvProductId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="XFG4534"
+            android:textSize="@dimen/medium_view_space"
+            />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
