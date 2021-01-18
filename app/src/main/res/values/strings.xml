@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">GNB Trades</string>
     <string name="products">Select a product</string>
+    <string name="transactions">Transactions</string>
+    <string name="trade_amount">%f EUR</string>
 </resources>

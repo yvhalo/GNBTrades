@@ -1,16 +1,16 @@
-package com.gnb.gnbtrades.presentation.adapter
+package com.gnb.gnbtrades.presentation.products.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gnb.gnbtrades.R
-import com.gnb.gnbtrades.data.entities.Transaction
 import com.gnb.gnbtrades.domain.entities.Product
 
 /**
  * ProductListAdapter. adapter for main product list
  */
-class ProductListAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
+class ProductListAdapter(private val listener: (String) -> Unit?) : RecyclerView.Adapter<ProductViewHolder>() {
 
     private var products = listOf<Product>()
 
@@ -27,7 +27,7 @@ class ProductListAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
     /**
      * Binds data in ViewHolder specific position
      */
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bind(products[position])
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bind(products[position], listener)
 
     /**
      *  updates products list

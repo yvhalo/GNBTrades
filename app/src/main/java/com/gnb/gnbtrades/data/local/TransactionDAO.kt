@@ -1,12 +1,11 @@
 package com.gnb.gnbtrades.data.local
 
-import androidx.core.content.contentValuesOf
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.gnb.gnbtrades.data.entities.Transaction
 
 /**
- * TransactionDAO. Data access object for managing information
+ * TransactionDAO. Data access object for managing information from products and its transactions
  */
 @Dao
 interface TransactionDAO {
@@ -24,7 +23,6 @@ interface TransactionDAO {
      */
     @Query("SELECT * FROM `transaction` WHERE sku IN (:productId)")
     fun getProductTransactions(productId: String): LiveData<List<Transaction>>
-
     /**
      * Insert all transactions
      * @param transactions list of transactions

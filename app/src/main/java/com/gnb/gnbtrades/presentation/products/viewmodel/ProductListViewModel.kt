@@ -1,4 +1,4 @@
-package com.gnb.gnbtrades.presentation.viewmodel
+package com.gnb.gnbtrades.presentation.products.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData

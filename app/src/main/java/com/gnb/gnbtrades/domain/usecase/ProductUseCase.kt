@@ -2,7 +2,6 @@ package com.gnb.gnbtrades.domain.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.gnb.gnbtrades.data.entities.Transaction
 import com.gnb.gnbtrades.data.repository.CommonRepository
 import com.gnb.gnbtrades.domain.entities.Product
 import javax.inject.Inject
@@ -19,7 +18,7 @@ class ProductUseCase @Inject constructor(private val commonRepository: CommonRep
      * @return products list
      */
     fun getProductList() : LiveData<List<Product>>? {
-        return Transformations.map(commonRepository.getTransactions()) {transactions ->
+        return Transformations.map(commonRepository.getTransactions()) { transactions ->
             transactions.map { transaction ->
                 Product(transaction.sku)
             }

@@ -2,6 +2,7 @@ package com.gnb.gnbtrades.di
 
 import com.gnb.gnbtrades.data.repository.CommonRepository
 import com.gnb.gnbtrades.domain.usecase.ProductUseCase
+import com.gnb.gnbtrades.domain.usecase.TradesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +28,18 @@ object UseCaseModule {
         commonRepository: CommonRepository
     ) : ProductUseCase {
         return ProductUseCase(commonRepository)
+    }
+
+    /**
+     * Provides TradesUseCase instance.
+     * @param commonRepository
+     * @return TradesUseCase
+     */
+    @Singleton
+    @Provides
+    fun providesTradesUseCase(
+            commonRepository: CommonRepository
+    ) : TradesUseCase {
+        return TradesUseCase(commonRepository)
     }
 }

@@ -1,7 +1,6 @@
-package com.gnb.gnbtrades.presentation.view
+package com.gnb.gnbtrades.presentation.products.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gnb.gnbtrades.R
 import com.gnb.gnbtrades.domain.entities.Product
-import com.gnb.gnbtrades.presentation.adapter.ProductListAdapter
-import com.gnb.gnbtrades.presentation.viewmodel.ProductListViewModel
+import com.gnb.gnbtrades.presentation.base.BaseActivity
+import com.gnb.gnbtrades.presentation.products.adapter.ProductListAdapter
+import com.gnb.gnbtrades.presentation.products.viewmodel.ProductListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_products.*
 
@@ -44,13 +44,18 @@ class ProductsFragment : Fragment() {
      * setupProductList. initializes and populates data into product list
      */
     private fun setupProductList() {
+        var itemListener = {productId: String ->
+            val action = ProductsFragmentDirections.actionProductsFragmentToProductTradesFragment(productId)
+            (activity as BaseActivity).navController?.let {it.navigate(action)}
+        }
         rvProductList.hasFixedSize()
         rvProductList.layoutManager = LinearLayoutManager(context)
         rvProductList.itemAnimator = DefaultItemAnimator()
-        rvProductList.adapter = ProductListAdapter()
+        rvProductList.adapter = ProductListAdapter(itemListener)
 
         viewModel.getProducts()?.observe(viewLifecycleOwner, Observer<List<Product>> { products ->
             (rvProductList.adapter as ProductListAdapter).update(products)
+            (activity as BaseActivity).hideLoading()
         })
 
 

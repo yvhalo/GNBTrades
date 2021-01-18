@@ -1,5 +1,6 @@
 package com.gnb.gnbtrades.di
 
+import com.gnb.gnbtrades.data.local.RateDAO
 import com.gnb.gnbtrades.data.remote.Webservice
 import com.gnb.gnbtrades.data.local.TransactionDAO
 import com.gnb.gnbtrades.data.repository.CommonRepository
@@ -26,8 +27,9 @@ object RepositoryModule {
     @Provides
     fun provideCommonRepository(
         webservice: Webservice,
-        transactionDAO: TransactionDAO
+        transactionDAO: TransactionDAO,
+        rateDAO: RateDAO
     ) : CommonRepository {
-        return CommonRepository(webservice, transactionDAO)
+        return CommonRepository(webservice, transactionDAO, rateDAO)
     }
 }

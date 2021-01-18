@@ -11,9 +11,9 @@ import androidx.room.PrimaryKey
  * @param rateVal exchange rate value
  */
 
-@Entity(tableName = "rate")
+@Entity(tableName = "rates")
 data class Rate constructor(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val from: String?,
-    val to: String?,
-    val rateVal: Float?)
+    val from: String,
+    val to: String,
+    val rate: Float)

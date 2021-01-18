@@ -8,4 +8,5 @@ import com.gnb.gnbtrades.data.entities.Transaction
 @Database(entities = [Transaction::class, Rate::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun transactionDAO(): TransactionDAO
+    abstract fun rateDAO(): RateDAO
 }

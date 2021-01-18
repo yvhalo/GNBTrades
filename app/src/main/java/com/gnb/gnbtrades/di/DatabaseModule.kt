@@ -37,4 +37,11 @@ object DatabaseModule {
     @Provides
     fun provideTransactionDAO(appDatabase: AppDatabase) = appDatabase.transactionDAO()
 
+    /**
+     * Provides RateDAO instance
+     * return RateDAO instance
+     */
+    @Provides
+    fun provideRateDAO(appDatabase: AppDatabase) = appDatabase.rateDAO()
+
 }
