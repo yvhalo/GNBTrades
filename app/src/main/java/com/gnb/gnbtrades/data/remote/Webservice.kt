@@ -1,10 +1,9 @@
-package com.gnb.gnbtrades.data
+package com.gnb.gnbtrades.data.remote
 
-import com.gnb.gnbtrades.domain.entities.Rate
-import com.gnb.gnbtrades.domain.entities.Transaction
+import com.gnb.gnbtrades.data.entities.Rate
+import com.gnb.gnbtrades.data.entities.Transaction
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 /**
  * Retrofit webservice interface
@@ -16,11 +15,11 @@ interface Webservice {
      * Gets all rates
      */
     @GET("/rates")
-    fun getRates() : Call<List<Rate>>
+    suspend fun getRates() : List<Rate>
 
     /**
      * Gets all transactions
      */
     @GET("/transactions")
-    fun getTransactions() : Call<List<Transaction>>
+    suspend fun getTransactions() : List<Transaction>
 }

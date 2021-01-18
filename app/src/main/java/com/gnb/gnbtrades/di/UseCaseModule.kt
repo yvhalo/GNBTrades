@@ -1,7 +1,6 @@
 package com.gnb.gnbtrades.di
 
-import com.gnb.gnbtrades.data.Webservice
-import com.gnb.gnbtrades.domain.repository.CommonRepository
+import com.gnb.gnbtrades.data.repository.CommonRepository
 import com.gnb.gnbtrades.domain.usecase.ProductUseCase
 import dagger.Module
 import dagger.Provides

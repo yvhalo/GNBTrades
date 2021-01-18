@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GNB Trades</string>
+    <string name="products">Select a product</string>
 </resources>

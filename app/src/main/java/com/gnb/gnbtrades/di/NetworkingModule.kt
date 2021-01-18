@@ -1,7 +1,7 @@
 package com.gnb.gnbtrades.di
 
-import com.gnb.gnbtrades.data.Webservice
-import com.gnb.gnbtrades.data.interceptors.RequestInterceptor
+import com.gnb.gnbtrades.data.remote.Webservice
+import com.gnb.gnbtrades.data.remote.interceptors.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

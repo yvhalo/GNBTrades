@@ -1,7 +1,7 @@
 package com.gnb.gnbtrades.domain.entities
 
 /**
- * Product. represents a product from GNB
- * @param productId (sku field from transactions)
+ * Product. Domain entity for get simple product list
+ * @param productId product identifier
  */
-data class Product (val productId : String)
+data class Product(val productId : String)

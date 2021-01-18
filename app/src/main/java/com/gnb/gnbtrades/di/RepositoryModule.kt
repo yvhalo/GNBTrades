@@ -1,7 +1,8 @@
 package com.gnb.gnbtrades.di
 
-import com.gnb.gnbtrades.data.Webservice
-import com.gnb.gnbtrades.domain.repository.CommonRepository
+import com.gnb.gnbtrades.data.remote.Webservice
+import com.gnb.gnbtrades.data.local.TransactionDAO
+import com.gnb.gnbtrades.data.repository.CommonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +25,9 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideCommonRepository(
-        webservice: Webservice
+        webservice: Webservice,
+        transactionDAO: TransactionDAO
     ) : CommonRepository {
-        return CommonRepository(webservice)
+        return CommonRepository(webservice, transactionDAO)
     }
 }

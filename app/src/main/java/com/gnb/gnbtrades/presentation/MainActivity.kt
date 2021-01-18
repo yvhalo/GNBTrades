@@ -1,11 +1,9 @@
-package com.gnb.gnbtrades.presentation.view
+package com.gnb.gnbtrades.presentation
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.gnb.gnbtrades.R
+import com.gnb.gnbtrades.presentation.view.ProductsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -15,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // TODO Better splash
+        setTheme(R.style.Theme_GNBTrades)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // TODO use jetpack navigation
