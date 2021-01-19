@@ -10,6 +10,7 @@ import com.gnb.gnbtrades.domain.entities.Product
 import com.gnb.gnbtrades.domain.entities.ProductTrades
 import com.gnb.gnbtrades.domain.entities.Trade
 import kotlinx.coroutines.*
+import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -25,6 +26,9 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
         const val EURO = "EUR"
     }
 
+    /**
+     * Initializes exchangeRates data once
+     */
     init {
         GlobalScope.launch(Dispatchers.IO) {
             val result = withContext(Dispatchers.Default) {
@@ -34,6 +38,9 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
         }
     }
 
+    /**
+     * Gets trades from commonRepository and transforms to Domain-Presentation entities
+     */
     fun getTrades(productId: String): LiveData<ProductTrades>  {
 
         var trades =  Transformations.map(commonRepository.getTransactions(productId)) { transactions ->
@@ -50,21 +57,38 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
 
         var mediatorLiveData = MediatorLiveData<ProductTrades>()
         mediatorLiveData.addSource(trades) { processedTrades ->
-            var totalAmount = processedTrades.sumByFloat { it.amount }
-            mediatorLiveData.value = ProductTrades(totalAmount = String.format("%.2f %s", totalAmount, EURO), trades = processedTrades)
+            var totalAmount = processedTrades.sumByBigDecimal { it.amount }
+            mediatorLiveData.value = ProductTrades(totalAmount = totalAmount.setScale(2, RoundingMode.HALF_EVEN), trades = processedTrades)
         }
 
         return mediatorLiveData
     }
 
-    fun createTradeObject(amount: Float) : Trade = Trade(amount, EURO)
+    /**
+     * Creates a Trade object from Transaction information
+     * @amount transaction amount
+     * @return trade with amount transformed into BigDecimal with Bankers Rounding
+     */
+    fun createTradeObject(amount: Float) : Trade = Trade(BigDecimal(amount.toString()).setScale(2, RoundingMode.HALF_EVEN), EURO)
 
+    /**
+     * Gets euro conversion of the transaction amount
+     * @param transaction
+     * @return euro amount
+     */
     fun getEuroValue(transaction: Transaction) : Float? {
         return if (transaction.amount != null && transaction.currency != null) {
             filter(transaction, transaction.currency, transaction.amount)
         } else {0F}
     }
 
+    /**
+     * Filters currency exchange list and finds conversions from every required currency to euro until gets the right transformed amount
+     * @param transaction to be transformed
+     * @param currency currency to transform into euro
+     * @param transactionValue current transaction value to transform into euro
+     * @return euro amount
+     */
     fun filter(transaction: Transaction, currency: String, transactionValue: Float) : Float {
         var value = 0F
         var currencyRates = exchangeRates.filter { it.from == currency }
@@ -84,8 +108,11 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
         return value
     }
 
-    inline fun <T>List<T?>.sumByFloat(selector: (T) -> Float): Float {
-        var sum = 0F
+    /**
+     * extension function for List (Trades). adds all transaction amount values into a total
+     */
+    inline fun <T>List<T?>.sumByBigDecimal(selector: (T) -> BigDecimal): BigDecimal {
+        var sum = BigDecimal.ZERO
         for (element in this) {
             element?.let{
                 sum += selector(element)

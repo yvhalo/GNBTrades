@@ -9,13 +9,17 @@ import androidx.navigation.NavController
 import com.gnb.gnbtrades.presentation.products.view.ProductsFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * BaseActivity
+ */
 open class BaseActivity : AppCompatActivity() {
+
     var navController : NavController? = null
 
     private var firstTime = true
 
     companion object {
-        const val COMMON_DURATION = 1000L
+        const val COMMON_DURATION = 500L
     }
 
     override fun onResume() {
@@ -23,6 +27,9 @@ open class BaseActivity : AppCompatActivity() {
         firstTime = true
     }
 
+    /**
+     * Shows loading view with animation
+     */
     fun showLoading() {
         animate(loading)
                 .alpha(1f)
@@ -30,10 +37,13 @@ open class BaseActivity : AppCompatActivity() {
                 .start()
     }
 
+    /**
+     * Hides loading view with animation
+     */
     fun hideLoading() {
         var animate = animate(loading)
             if (firstTime) {
-                animate.startDelay = 1000L
+                animate.startDelay = 2000L
                 firstTime = false
             }
             animate.alpha(0f)

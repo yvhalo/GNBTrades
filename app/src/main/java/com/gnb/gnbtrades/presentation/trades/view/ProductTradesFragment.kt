@@ -16,6 +16,8 @@ import com.gnb.gnbtrades.presentation.trades.adapter.TradesAdapter
 import com.gnb.gnbtrades.presentation.trades.viewmodel.ProductTradesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_product_trades.*
+import kotlinx.android.synthetic.main.item_trade.view.*
+import java.math.RoundingMode
 
 /**
  * ProductTradesFragment
@@ -39,6 +41,13 @@ class ProductTradesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViews()
+    }
+
+    /**
+     * Initializes fragment views
+     */
+    private fun setupViews() {
         txtProductId.text = args.productId
 
         rvTransactionsList.hasFixedSize()
@@ -47,7 +56,9 @@ class ProductTradesFragment : Fragment() {
         rvTransactionsList.adapter = TradesAdapter()
 
         viewModel.getTrades(args.productId)?.observe(viewLifecycleOwner, Observer { productTrades ->
-            txtTotalAmount.text = productTrades.totalAmount.toString()
+            val amount = productTrades.totalAmount.setScale(2, RoundingMode.HALF_EVEN).toString()
+            txtTotalAmount.text  = String.format("%s €", amount)
+
             (rvTransactionsList.adapter as TradesAdapter).update(productTrades.trades)
         })
     }

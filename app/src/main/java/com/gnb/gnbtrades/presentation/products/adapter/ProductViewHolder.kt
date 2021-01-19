@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_product.view.*
 class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     /**
-     * Bind. binds data a behaviour of an specific list item by position
+     * Bind. binds data and behaviour of an specific list item by position
      */
     fun bind(
         product: Product,
