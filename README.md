@@ -1,4 +1,6 @@
 # GNBTrades
+<img src="images/white.gif" width="200" height="395">
+<img src="images/dark.gif" width="200" height="395">
 
 ## About the app
 This application gets transactions from a API and identifies unique product ids showing a list of products.
