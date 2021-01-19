@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gnb.gnbtrades.R
 import com.gnb.gnbtrades.domain.entities.ProductTrades
+import com.gnb.gnbtrades.presentation.base.BaseActivity
 import com.gnb.gnbtrades.presentation.trades.adapter.TradesAdapter
 import com.gnb.gnbtrades.presentation.trades.viewmodel.ProductTradesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,6 +61,7 @@ class ProductTradesFragment : Fragment() {
             txtTotalAmount.text  = String.format("%s €", amount)
 
             (rvTransactionsList.adapter as TradesAdapter).update(productTrades.trades)
+            (activity as BaseActivity).hideLoading()
         })
     }
 }
