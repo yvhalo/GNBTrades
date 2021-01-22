@@ -50,9 +50,8 @@ class TradesAdapter() : RecyclerView.Adapter<TradesAdapter.TradesViewHolder>() {
         /**
          * Bind. bind data into current itemView
          */
-        fun bind(trade: Trade) = with(itemView) {
-            val amount = trade.amount.setScale(2, RoundingMode.HALF_EVEN).toString()
-            itemView.txtTradeAmount.text = String.format("%s €", amount)
+        fun bind(trade: Trade) {
+            itemView.txtTradeAmount.text = String.format("%s €", trade.amount)
         }
     }
 }

@@ -58,7 +58,7 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
         var mediatorLiveData = MediatorLiveData<ProductTrades>()
         mediatorLiveData.addSource(trades) { processedTrades ->
             var totalAmount = processedTrades.sumByBigDecimal { it.amount }
-            mediatorLiveData.value = ProductTrades(totalAmount = totalAmount.setScale(2, RoundingMode.HALF_EVEN), trades = processedTrades)
+            mediatorLiveData.value = ProductTrades(totalAmount = totalAmount, trades = processedTrades)
         }
 
         return mediatorLiveData
@@ -69,17 +69,17 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
      * @amount transaction amount
      * @return trade with amount transformed into BigDecimal with Bankers Rounding
      */
-    fun createTradeObject(amount: Float) : Trade = Trade(BigDecimal(amount.toString()).setScale(2, RoundingMode.HALF_EVEN), EURO)
+    fun createTradeObject(amount: BigDecimal) : Trade = Trade(amount.setScale(2, RoundingMode.HALF_EVEN).toString(), EURO)
 
     /**
      * Gets euro conversion of the transaction amount
      * @param transaction
      * @return euro amount
      */
-    fun getEuroValue(transaction: Transaction) : Float? {
+    fun getEuroValue(transaction: Transaction) : BigDecimal? {
         return if (transaction.amount != null && transaction.currency != null) {
             filter(transaction, transaction.currency, transaction.amount)
-        } else {0F}
+        } else {BigDecimal.ZERO}
     }
 
     /**
@@ -89,20 +89,20 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
      * @param transactionValue current transaction value to transform into euro
      * @return euro amount
      */
-    fun filter(transaction: Transaction, currency: String, transactionValue: Float) : Float {
-        var value = 0F
+    fun filter(transaction: Transaction, currency: String, transactionValue: BigDecimal) : BigDecimal {
+        var value = BigDecimal.ZERO
         var currencyRates = exchangeRates.filter { it.from == currency }
 
         for (rate in currencyRates) {
             if (rate.to == EURO) return transaction.amount!! * rate.rate
         }
-        if (value == 0F) {
+        if (value == BigDecimal.ZERO) {
             var i = 0
             do {
                 var rate = currencyRates[i]
                 i++
                 value = filter(transaction, rate.to, transactionValue * rate.rate)
-            } while(value == 0F)
+            } while(value == BigDecimal.ZERO)
         }
 
         return value
@@ -111,14 +111,15 @@ class TradesUseCase @Inject constructor(private val commonRepository: CommonRepo
     /**
      * extension function for List (Trades). adds all transaction amount values into a total
      */
-    inline fun <T>List<T?>.sumByBigDecimal(selector: (T) -> BigDecimal): BigDecimal {
+    inline fun <T>List<T?>.sumByBigDecimal(selector: (T) -> String): String {
         var sum = BigDecimal.ZERO
         for (element in this) {
             element?.let{
-                sum += selector(element)
+                sum += BigDecimal(selector(element))
             }
         }
-        return sum
+        sum.setScale(2, RoundingMode.HALF_EVEN)
+        return sum.toString()
     }
 
 }

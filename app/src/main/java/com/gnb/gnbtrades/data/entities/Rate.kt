@@ -2,6 +2,7 @@ package com.gnb.gnbtrades.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.math.BigDecimal
 
 /**
  * Rate represents exchange rate between two currencies
@@ -16,4 +17,4 @@ data class Rate constructor(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val from: String,
     val to: String,
-    val rate: Float)
+    val rate: BigDecimal)

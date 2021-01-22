@@ -1,7 +1,9 @@
 package com.gnb.gnbtrades.di
 
+import com.gnb.gnbtrades.data.adapters.JSONAdapter
 import com.gnb.gnbtrades.data.remote.Webservice
 import com.gnb.gnbtrades.data.remote.interceptors.RequestInterceptor
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,9 +44,9 @@ object NetworkingModule {
      */
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient : OkHttpClient): Retrofit.Builder{
+    fun provideRetrofit(okHttpClient : OkHttpClient, moshi : Moshi): Retrofit.Builder{
         return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .baseUrl("https://quiet-stone-2094.herokuapp.com")
             .client(okHttpClient)
 
@@ -60,5 +62,17 @@ object NetworkingModule {
         return retrofit
             .build()
             .create(Webservice::class.java)
+    }
+
+    /**
+     * Provides Moshi JSON converter
+     * @return Moshi JSON converted instance with custom JSONAdapter
+     */
+    @Singleton
+    @Provides
+    fun providesMoshi() : Moshi {
+        return Moshi.Builder()
+                .add(JSONAdapter())
+                .build()
     }
 }

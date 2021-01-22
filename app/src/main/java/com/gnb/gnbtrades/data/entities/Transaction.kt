@@ -2,6 +2,8 @@ package com.gnb.gnbtrades.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.math.BigDecimal
+import java.math.BigInteger
 
 /**
  * Transaction. Represents a transaction made by GNB
@@ -13,8 +15,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "transaction")
 data class Transaction constructor(
-    @PrimaryKey(autoGenerate = true) val id: Int? = 0,
-    val sku : String,
-    val amount: Float? = 0F,
-    val currency: String? = ""
+        @PrimaryKey(autoGenerate = true) val id: Int? = 0,
+        val sku : String,
+        val amount: BigDecimal? = BigDecimal.ZERO,
+        val currency: String? = ""
 )

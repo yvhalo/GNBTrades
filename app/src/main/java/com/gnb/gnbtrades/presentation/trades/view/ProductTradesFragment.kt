@@ -56,8 +56,8 @@ class ProductTradesFragment : Fragment() {
         rvTransactionsList.itemAnimator = DefaultItemAnimator()
         rvTransactionsList.adapter = TradesAdapter()
 
-        viewModel.getTrades(args.productId)?.observe(viewLifecycleOwner, Observer { productTrades ->
-            val amount = productTrades.totalAmount.setScale(2, RoundingMode.HALF_EVEN).toString()
+        viewModel.getTrades(args.productId).observe(viewLifecycleOwner, Observer { productTrades ->
+            val amount = productTrades.totalAmount
             txtTotalAmount.text  = String.format("%s €", amount)
 
             (rvTransactionsList.adapter as TradesAdapter).update(productTrades.trades)

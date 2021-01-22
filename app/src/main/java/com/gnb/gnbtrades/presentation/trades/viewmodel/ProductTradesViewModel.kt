@@ -17,7 +17,7 @@ class ProductTradesViewModel @ViewModelInject constructor(
     /**
      * Gets trades by product
      */
-    fun getTrades(productId: String) : LiveData<ProductTrades>? {
+    fun getTrades(productId: String) : LiveData<ProductTrades> {
 
         return tradesUseCase.getTrades(productId)
 

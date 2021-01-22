@@ -1,5 +1,6 @@
 package com.gnb.gnbtrades.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.gnb.gnbtrades.data.entities.Rate
@@ -38,7 +39,7 @@ class CommonRepository @Inject constructor(private val webservice: Webservice,
 
     /**
      * Gets product transactions from database
-     * @return livedata from database
+     * @return liveData from database
      */
     fun getTransactions(productId: String): LiveData<List<Transaction>> = liveData(Dispatchers.IO) {
         emitSource(transactionDAO.getProductTransactions(productId))
@@ -47,6 +48,8 @@ class CommonRepository @Inject constructor(private val webservice: Webservice,
     /**
      * Gets rates
      */
-    suspend fun getRates() = rateDAO.getRates()
+    suspend fun getRates() : List<Rate> {
+        return rateDAO.getRates()
+    }
 
 }

@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * MainActivity
  */
 @AndroidEntryPoint
-class MainActivity() : BaseActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_GNBTrades)

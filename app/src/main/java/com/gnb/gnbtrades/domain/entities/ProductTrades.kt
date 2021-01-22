@@ -7,4 +7,4 @@ import java.time.temporal.TemporalAmount
 /**
  * ProductTrades.
  */
-data class ProductTrades(val totalAmount: BigDecimal, val trades: List<Trade?>)
+data class ProductTrades(val totalAmount: String, val trades: List<Trade?>)
